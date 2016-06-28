@@ -70,6 +70,7 @@ UCI configuration options must go in ``/etc/config/openwisp``.
 - ``capath``: value passed to curl ``--capath`` argument, defaults to ``/etc/ssl/certs``; see also `curl capath argument <https://curl.haxx.se/docs/manpage.html#--capath>`_
 - ``connect_timeout``: value passed to curl ``--connect-timeout`` argument, defaults to ``15``; see `curl connect-timeout argument <https://curl.haxx.se/docs/manpage.html#--connect-timeout>`_
 - ``max_time``: value passed to curl ``--max-time`` argument, defaults to ``30``; see `curl connect-timeout argument <https://curl.haxx.se/docs/manpage.html#-m>`_
+- ``mac_interface``: the interface from which the MAC address is taken when performing automatic registration, defaults to ``eth0``;
 
 Automatic registration
 ----------------------
@@ -94,8 +95,13 @@ even if reset or reflashed.
 The ``key`` is generated consistently with an operation like ``md5sum(mac_address + shared_secret)``;
 this allows the controller application to recognize that an existing device is registering itself again.
 
-This feature is enabled by default, but must be enabled also in the controller application
-in order to work.
+The ``mac_interface`` configuration key specifies which interface is used to calculate the mac address,
+this setting defaults to ``eth0``. If no ``eth0`` interface exists, the first non-loopback, non-bridge and non-tap
+interface is used. You won't need to change this setting often, but if you do, ensure you choose a physical
+interface which has constant mac address.
+
+The "Consistent key generation" feature is enabled by default, but must be enabled also in the
+controller application in order to work.
 
 Merge configuration
 -------------------
